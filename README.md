@@ -2,7 +2,29 @@
 ---
 https://github.com/crossbario/autobahn-python
 
-```
+```py
+from __future__ import absolute_import
+
+import unittest
+
+from autobahn.util import IdGenerator
+
+class TEstGenerator(unittest.TestCase):
+  def test_idgenerator_is_generator(self):
+    "IdGenerator follows the generator protocol"
+    g = IdGenerator()
+    self.assertEqual(1, next(g))
+    self.assertEqual(2, next(g))
+    
+  def test_generator_wrap(self):
+    g = IdGenerator()
+    g._next = 2 ** 53 - 1
+    
+    v = next(g)
+    self.assertEqual(v, 2 ** 53)
+    v = next(g)
+    self.assertEqual(v, 1)
+
 ```
 
 ```py
